@@ -1,5 +1,23 @@
+<style>
+table {
+  border-collapse: collapse;
+  border: 1px solid #999;
+  width: 100%;
+  margin: 15px 0;
+}
+table th {
+  border: 1px solid #999;
+  padding: 8px;
+  text-align: left;
+  font-weight: bold;
+}
+table td {
+  border: 1px solid #999;
+  padding: 8px;
+}
+</style>
 
-# Geo Segment QGIS Plugin — Documentation
+# Geo Segment QGIS Plugin — Professional Documentation
 
 [![QGIS](https://img.shields.io/badge/QGIS-3.28+-blue.svg)](https://qgis.org)
 [![Python](https://img.shields.io/badge/Python-3.9+-green.svg)](https://www.python.org/)
@@ -13,10 +31,10 @@
 ## Table of Contents
 
 - [Overview](#overview)
+- [Installation](#installation)
+- [System Requirements](#system-requirements)
 - [Core Features](#core-features)
 - [Additional Capabilities](#additional-capabilities)
-- [System Requirements](#system-requirements)
-- [Installation](#installation)
 - [Quick Start Guide](#quick-start-guide)
 - [Technical Reference](#technical-reference)
 - [Learning Resources](#learning-resources)
@@ -44,6 +62,118 @@ Geo Segment integrates cutting-edge AI/ML models and foundation model architectu
 - **Geospatial**: GDAL 3.4+ for raster/vector I/O; GeoPandas for vector operations
 - **Acceleration**: GPU support (NVIDIA CUDA 11.8+, AMD ROCm, Apple Silicon MPS)
 - **Deployment**: QGIS plugin architecture with lazy-loaded modules
+
+---
+
+## Installation
+
+### Deployment Steps
+
+#### Step 1: Acquire the Plugin
+
+**Via Git**:
+
+```bash
+git clone https://github.com/opengeoai/geo_segment.git
+cd geo_segment/qgis_plugin
+```
+
+**Via Download**: Download and extract the source archive from the repository.
+
+---
+
+#### Step 2: Deploy to QGIS Plugin Directory
+
+**Windows (Copy-Paste to Folder)**:
+
+Locate your QGIS plugins folder:
+
+1. Open **File Explorer**
+2. Navigate to: `C:\Users\YourUsername\AppData\Roaming\QGIS\QGIS3\profiles\default\python\plugins`
+    - Or paste this path directly into File Explorer address bar: `%APPDATA%\QGIS\QGIS3\profiles\default\python\plugins`
+3. Copy the entire `geo_segment` folder into this plugins directory
+4. You should now see: `C:\Users\YourUsername\AppData\Roaming\QGIS\QGIS3\profiles\default\python\plugins\geo_segment\`
+
+**Linux (Bash)**:
+
+```bash
+PLUGIN_PATH="$HOME/.local/share/QGIS/QGIS3/profiles/default/python/plugins"
+mkdir -p "$PLUGIN_PATH"
+cp -r geo_segment "$PLUGIN_PATH/"
+echo "Plugin installed to: $PLUGIN_PATH"
+```
+
+**macOS (Bash)**:
+
+```bash
+PLUGIN_PATH="$HOME/Library/Application Support/QGIS/QGIS3/profiles/default/python/plugins"
+mkdir -p "$PLUGIN_PATH"
+cp -r geo_segment "$PLUGIN_PATH/"
+echo "Plugin installed to: $PLUGIN_PATH"
+```
+
+---
+
+#### Step 3: Enable Plugin in QGIS
+
+1. Launch QGIS
+2. Navigate: **Plugins** → **Manage and Install Plugins...**
+3. Search: `Geo Segment`
+4. **Check box** to enable
+5. Click **OK** and restart QGIS
+
+---
+
+#### Step 4: Install AI Models & Dependencies
+
+On first launch:
+
+1. Open **Plugins** → **Geo Segment** → **Geo Segment Dock**
+2. Navigate: **Geo Segment** → **Dependency Manager**
+3. Select required components:
+    - ✓ **Essential**: SAMGeo models, Spectral tools
+    - ☐ **Optional**: DeepForest, Moondream, Semantic segmentation models
+4. Click **Install All** (downloads ~10–20GB depending on selection)
+5. Monitor progress bar; total time: 30–120 minutes
+
+**Verification Checklist**:
+
+- ✓ Plugin appears in Plugins menu
+- ✓ Toolbar icons load without errors
+- ✓ **Geo Segment** → **About** shows version 1.0.4+
+- ✓ Test: Load sample Sentinel-2 GeoTIFF and run Spectral Indices
+
+---
+
+## System Requirements
+
+### Runtime Environment
+
+| **Component** | **Minimum** | **Recommended** | **Notes**                                |
+| ------------- | ----------- | --------------- | ---------------------------------------- |
+| **QGIS**      | 3.28.0+     | 3.34+ LTS       | Python 3 plugin environment required     |
+| **Python**    | 3.9         | 3.11–3.12       | Shipped with QGIS; not standalone        |
+| **RAM**       | 8 GB        | 16+ GB          | Per concurrent analysis task             |
+| **Storage**   | 20 GB       | 50+ GB          | All models + dependencies + working data |
+
+### GPU Acceleration (Optional, Highly Recommended)
+
+| **Platform**          | **Driver**    | **Version** | **VRAM**     | **Performance Gain**     |
+| --------------------- | ------------- | ----------- | ------------ | ------------------------ |
+| **NVIDIA CUDA**       | nvidia-driver | 11.8+       | 6–8 GB       | 10–50× inference speedup |
+| **AMD ROCm**          | amd-driver    | 5.0+        | 8 GB         | 8–40× acceleration       |
+| **Apple Silicon MPS** | Built-in      | M1/M2/M3/M4 | 16 GB shared | 5–15× speedup            |
+
+### Core Dependencies (Auto-Installed)
+
+```
+PyTorch 2.0+              (Deep learning framework)
+GDAL 3.4+                 (Geospatial I/O)
+GeoPandas 0.12+           (Vector processing)
+scikit-image, OpenCV      (Image processing)
+segmentation-models-pytorch (Pre-built model zoo)
+NumPy, SciPy, pandas      (Scientific computing)
+```
 
 ---
 
@@ -259,116 +389,6 @@ Geo Segment integrates cutting-edge AI/ML models and foundation model architectu
 - Binary masks (water/non-water)
 - Probability maps (0–1 continuous confidence)
 - Water index rasters (NDWI-derived)
-
----
-
-## System Requirements
-
-### Runtime Environment
-
-| **Component** | **Minimum** | **Recommended** | **Notes**                                |
-| ------------- | ----------- | --------------- | ---------------------------------------- |
-| **QGIS**      | 3.28.0+     | 3.34+ LTS       | Python 3 plugin environment required     |
-| **Python**    | 3.9         | 3.11–3.12       | Shipped with QGIS; not standalone        |
-| **RAM**       | 8 GB        | 16+ GB          | Per concurrent analysis task             |
-| **Storage**   | 20 GB       | 50+ GB          | All models + dependencies + working data |
-
-### GPU Acceleration (Optional, Highly Recommended)
-
-| **Platform**          | **Driver**    | **Version** | **VRAM**     | **Performance Gain**     |
-| --------------------- | ------------- | ----------- | ------------ | ------------------------ |
-| **NVIDIA CUDA**       | nvidia-driver | 11.8+       | 6–8 GB       | 10–50× inference speedup |
-| **AMD ROCm**          | amd-driver    | 5.0+        | 8 GB         | 8–40× acceleration       |
-| **Apple Silicon MPS** | Built-in      | M1/M2/M3/M4 | 16 GB shared | 5–15× speedup            |
-
-### Core Dependencies (Auto-Installed)
-
-```
-PyTorch 2.0+              (Deep learning framework)
-GDAL 3.4+                 (Geospatial I/O)
-GeoPandas 0.12+           (Vector processing)
-scikit-image, OpenCV      (Image processing)
-segmentation-models-pytorch (Pre-built model zoo)
-NumPy, SciPy, pandas      (Scientific computing)
-```
-
----
-
-## Installation
-
-### Deployment Steps
-
-#### Step 1: Acquire the Plugin
-
-**Via Git**:
-
-```bash
-git clone https://github.com/opengeoai/geo_segment.git
-cd geo_segment/qgis_plugin
-```
-
-**Via Download**: Download and extract the source archive from the repository.
-
----
-
-#### Step 2: Deploy to QGIS Plugin Directory
-
-**Windows (PowerShell as Administrator)**:
-
-```powershell
-$PluginPath = "$env:APPDATA\QGIS\QGIS3\profiles\default\python\plugins"
-Copy-Item -Path "geo_segment" -Destination $PluginPath -Recurse -Force
-Write-Host "Plugin installed to: $PluginPath"
-```
-
-**Linux (Bash)**:
-
-```bash
-PLUGIN_PATH="$HOME/.local/share/QGIS/QGIS3/profiles/default/python/plugins"
-mkdir -p "$PLUGIN_PATH"
-cp -r geo_segment "$PLUGIN_PATH/"
-echo "Plugin installed to: $PLUGIN_PATH"
-```
-
-**macOS (Bash)**:
-
-```bash
-PLUGIN_PATH="$HOME/Library/Application Support/QGIS/QGIS3/profiles/default/python/plugins"
-mkdir -p "$PLUGIN_PATH"
-cp -r geo_segment "$PLUGIN_PATH/"
-echo "Plugin installed to: $PLUGIN_PATH"
-```
-
----
-
-#### Step 3: Enable Plugin in QGIS
-
-1. Launch QGIS
-2. Navigate: **Plugins** → **Manage and Install Plugins...**
-3. Search: `Geo Segment`
-4. **Check box** to enable
-5. Click **OK** and restart QGIS
-
----
-
-#### Step 4: Install AI Models & Dependencies
-
-On first launch:
-
-1. Open **Plugins** → **Geo Segment** → **Geo Segment Dock**
-2. Navigate: **Geo Segment** → **Dependency Manager**
-3. Select required components:
-    - ✓ **Essential**: SAMGeo models, Spectral tools
-    - ☐ **Optional**: DeepForest, Moondream, Semantic segmentation models
-4. Click **Install All** (downloads ~10–20GB depending on selection)
-5. Monitor progress bar; total time: 30–120 minutes
-
-**Verification Checklist**:
-
-- ✓ Plugin appears in Plugins menu
-- ✓ Toolbar icons load without errors
-- ✓ **Geo Segment** → **About** shows version 1.0.4+
-- ✓ Test: Load sample Sentinel-2 GeoTIFF and run Spectral Indices
 
 ---
 
