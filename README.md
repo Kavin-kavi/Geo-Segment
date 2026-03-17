@@ -1,22 +1,3 @@
-<style>
-table {
-  border-collapse: collapse;
-  border: 1px solid #999;
-  width: 100%;
-  margin: 15px 0;
-}
-table th {
-  border: 1px solid #999;
-  padding: 8px;
-  text-align: left;
-  font-weight: bold;
-}
-table td {
-  border: 1px solid #999;
-  padding: 8px;
-}
-</style>
-
 # Geo Segment QGIS Plugin — Professional Documentation
 
 [![QGIS](https://img.shields.io/badge/QGIS-3.28+-blue.svg)](https://qgis.org)
