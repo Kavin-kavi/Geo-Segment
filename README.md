@@ -1,5 +1,5 @@
 
-# Geo Segment QGIS Plugin — Professional Documentation
+# Geo Segment QGIS Plugin — Documentation
 
 [![QGIS](https://img.shields.io/badge/QGIS-3.28+-blue.svg)](https://qgis.org)
 [![Python](https://img.shields.io/badge/Python-3.9+-green.svg)](https://www.python.org/)
